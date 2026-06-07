@@ -1,16 +1,16 @@
 # Daily-Tracker
 
-Local offline app for a detailed **UPSC CSE 2027** daily tracker.
+Local offline app for an exact **100-day UPSC GS + PSIR** daily tracker.
 
 ## Use
 
-Open `index.html` in a browser from the cloned repository directory.
+Open `/tmp/workspace/DevilEye03/Daily-Tracker/index.html` in a browser.
 
 It includes:
 
-- Date-wise micro plan from **12 Jun 2026 to 20 May 2027**
-- Sunday buffer days
-- Daily GS + PSIR micro-topic targets with one-pager + PYQ focus
-- Daily answer writing (5 questions), current affairs slot, and revision slot
-- Mains/Prelims/Optional revision-cycle phases
+- Date-wise micro plan from **08 Jun 2026 to 15 Sep 2026**
+- Weekly progression aligned to GS + PSIR coverage map (W1-W15)
+- Mon-Sat: one GS micro-topic + one PSIR micro-topic each day
+- Sunday: weekly revision + 1 GS mini test + 1 PSIR answer-writing set
+- Daily structure slots (GS 2.5h, PSIR 2.5h, Current Affairs 1h)
 - In-page status marking (stored locally in browser)
