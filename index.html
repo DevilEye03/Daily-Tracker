@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UPSC 2027 Daily Tracker (Local)</title>
+  <style>
+    :root { color-scheme: light; }
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f5f7fb; color: #1a1a1a; }
+    h1, h2 { margin-bottom: 8px; }
+    .card { background: #fff; border: 1px solid #dfe6f2; border-radius: 8px; padding: 14px; margin-bottom: 14px; }
+    .small { font-size: 12px; color: #555; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 10px; }
+    table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #dfe6f2; }
+    th, td { border: 1px solid #dfe6f2; padding: 6px; vertical-align: top; font-size: 12px; }
+    th { background: #eef3ff; position: sticky; top: 0; z-index: 1; }
+    tr.buffer { background: #fff8e1; }
+    input[type="text"] { width: 100%; box-sizing: border-box; font-size: 12px; }
+    .wrapper { overflow: auto; max-height: 70vh; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    button { margin-right: 8px; }
+  </style>
+</head>
+<body>
+  <h1>UPSC CSE 2027 Local Detailed Tracker</h1>
+  <p class="small">Range: <b>12 Jun 2026</b> to <b>20 May 2027</b> | Daily target: <b>6–7 hours</b> | Sunday: <b>Buffer/Backlog day</b></p>
+
+  <div class="card">
+    <h2>Plan Logic (PYQ priority + revision architecture)</h2>
+    <div class="grid">
+      <div>
+        <b>Mains PYQ priority (last 5 years trend focus)</b>
+        <ul>
+          <li>GS1: Society, post-independence, world history themes, geography concepts + map linkage.</li>
+          <li>GS2: Governance/accountability, welfare delivery, Parliament & judiciary, IR balancing.</li>
+          <li>GS3: Environment-climate, internal security basics, agriculture, economy-application questions.</li>
+          <li>GS4: Case-study structuring, ethics thinkers usage, administrative dilemmas.</li>
+          <li>Essay: Philosophical + governance-development blend; multidimensional outlines.</li>
+          <li>PSIR: Thinkers, comparative politics, IR theories, India-World relations, regional organizations.</li>
+        </ul>
+      </div>
+      <div>
+        <b>Revision structure implemented</b>
+        <ul>
+          <li><span class="mono">12 Jun–15 Sep</span>: Mains Cycle-1 completion (GS + PSIR balanced).</li>
+          <li><span class="mono">16 Sep–31 Oct</span>: Mains Revision-1 (+ Optional Rev-1).</li>
+          <li><span class="mono">01 Nov–30 Nov</span>: Mains Revision-2 (+ Optional Rev-2).</li>
+          <li><span class="mono">01 Dec–15 Feb</span>: Overlap Revision (Prelims-1 + Mains Rev-3 + Optional Rev-3).</li>
+          <li><span class="mono">16 Feb–10 Apr</span>: Prelims Revision-2 intensive.</li>
+          <li><span class="mono">11 Apr–20 May</span>: Prelims Revision-3 + tests + CSAT continuity.</li>
+        </ul>
+        <p class="small">After first prelims attempt and full cycle completion, shift majority effort to mains answer quality + test simulation.</p>
+      </div>
+      <div>
+        <b>Daily baseline (except Sunday buffer)</b>
+        <ul>
+          <li>2h 10m: GS micro-topic + 1-page notes + PYQ analysis.</li>
+          <li>2h 10m: PSIR micro-topic + 1-page notes + PYQ analysis.</li>
+          <li>1h 15m: Answer writing (minimum 5 questions).</li>
+          <li>45m: Current affairs update + linkage to static.</li>
+          <li>30m: Revision/flashcards/error log.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <button id="exportCsv">Export tracker CSV</button>
+    <button id="resetData">Reset all status</button>
+    <span class="small">All status and notes are stored only in your browser (local use).</span>
+  </div>
+
+  <div class="wrapper">
+    <table id="trackerTable">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Phase</th>
+          <th>GS micro target</th>
+          <th>PSIR micro target</th>
+          <th>Essay/Test add-on</th>
+          <th>Daily slots (6-7h)</th>
+          <th>Status (GS)</th>
+          <th>Status (PSIR)</th>
+          <th>Status (Ans 5Q)</th>
+          <th>Status (CA)</th>
+          <th>Self-note</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    const start = new Date('2026-06-12');
+    const end = new Date('2027-05-20');
+
+    const gsTopics = [
+      'Polity: Fundamental Rights application',
+      'Polity: Parliament procedures and accountability',
+      'Modern History: 1857 causes-consequences',
+      'Modern History: National movement phases',
+      'Economy: Inflation, monetary-fiscal policy linkage',
+      'Economy: Budget/Economic Survey theme extraction',
+      'Geography: Climatology + monsoon dynamics',
+      'Geography: Resources and location mapping',
+      'Society: Social justice themes',
+      'Governance: Welfare scheme implementation gaps',
+      'Environment: Climate conventions and COP outcomes',
+      'Security: Internal security challenges framework',
+      'Science-Tech: Emerging tech governance',
+      'Ethics: Aptitude + case handling framework'
+    ];
+
+    const psirTopics = [
+      'Political Theory: Justice, liberty, equality comparison',
+      'Western Thinkers: Plato/Aristotle core arguments',
+      'Indian Political Thought: Gandhi, Ambedkar, Nehru',
+      'Comparative Politics: State, power, legitimacy',
+      'IR Theories: Realism vs Liberalism application',
+      'India and World: Neighbourhood policy',
+      'India and Major Powers: US, Russia, EU, China',
+      'International Organizations: UN reforms debate',
+      'Security studies and strategic doctrines',
+      'Global South, multilateralism and geopolitics'
+    ];
+
+    const slots = 'GS (2h10) | PSIR (2h10) | Ans writing 5Q (1h15) | Current affairs (45m) | Revision log (30m)';
+
+    function fmt(d) {
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
+    function escAttr(s) {
+      return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function phaseFor(d) {
+      const x = fmt(d);
+      if (x <= '2026-09-15') return 'Mains Cycle-1 (coverage)';
+      if (x <= '2026-10-31') return 'Mains Revision-1 + Optional Rev-1';
+      if (x <= '2026-11-30') return 'Mains Revision-2 + Optional Rev-2';
+      if (x <= '2027-02-15') return 'Overlap: Prelims-1 + Mains Rev-3 + Optional Rev-3';
+      if (x <= '2027-04-10') return 'Prelims Revision-2 intensive';
+      return 'Prelims Revision-3 + mocks';
+    }
+
+    function addonFor(d) {
+      const day = d.getDay();
+      if (day === 0) return 'Buffer day: backlog clearance, weak-area revision, rest + planning.';
+      if (day === 6) return 'Essay practice: 1 outline + intro/conclusion drill (30-40 min).';
+      if (day === 3) return 'Mini sectional test (45-60 min) + error log update.';
+      return 'No extra test; keep answer writing quality-focused.';
+    }
+
+    function makeTarget(topic, phase, stream) {
+      let emphasis = 'Make 1-page notes + analyze PYQs of this micro-topic.';
+      if (phase.includes('Prelims')) emphasis = 'Solve 15 MCQs + revise facts + PYQ mapping.';
+      if (phase.includes('Mains Revision')) emphasis = 'Revise notes + write 1 mains answer + PYQ theme map.';
+      if (phase.includes('Overlap')) emphasis = 'Revise static + 10 MCQs + 1 short mains response + PYQ tags.';
+      return `${stream}: ${topic}. ${emphasis}`;
+    }
+
+    const tbody = document.querySelector('#trackerTable tbody');
+    const saved = JSON.parse(localStorage.getItem('upsc2027tracker') || '{}');
+
+    let gi = 0, pi = 0;
+    for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+      const day = d.getDay();
+      const dateKey = fmt(d);
+      const phase = phaseFor(d);
+      const gs = makeTarget(gsTopics[gi % gsTopics.length], phase, 'GS');
+      const ps = makeTarget(psirTopics[pi % psirTopics.length], phase, 'PSIR');
+      gi++; pi++;
+
+      const data = saved[dateKey] || { gs: '', psir: '', ans: '', ca: '', note: '' };
+      const tr = document.createElement('tr');
+      if (day === 0) tr.className = 'buffer';
+
+      tr.innerHTML = `
+        <td>${dateKey} (${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][day]})</td>
+        <td>${phase}</td>
+        <td>${day === 0 ? 'Buffer: revise pending GS topics + one-pager consolidation.' : gs}</td>
+        <td>${day === 0 ? 'Buffer: revise pending PSIR topics + thinker/IR quick map.' : ps}</td>
+        <td>${addonFor(d)}</td>
+        <td>${day === 0 ? '3-4h only: backlog + weekly reflection + next-week setup.' : slots}</td>
+        <td><input type="checkbox" data-k="gs" ${data.gs ? 'checked' : ''}></td>
+        <td><input type="checkbox" data-k="psir" ${data.psir ? 'checked' : ''}></td>
+        <td><input type="checkbox" data-k="ans" ${data.ans ? 'checked' : ''}></td>
+        <td><input type="checkbox" data-k="ca" ${data.ca ? 'checked' : ''}></td>
+        <td><input type="text" data-k="note" value="${escAttr(data.note || '')}" placeholder="write weak areas / completion notes"></td>
+      `;
+
+      tr.querySelectorAll('input').forEach(inp => {
+        inp.addEventListener('change', () => {
+          const row = saved[dateKey] || {};
+          if (inp.type === 'checkbox') row[inp.dataset.k] = inp.checked ? 1 : 0;
+          else row[inp.dataset.k] = inp.value;
+          saved[dateKey] = row;
+          localStorage.setItem('upsc2027tracker', JSON.stringify(saved));
+        });
+      });
+
+      tbody.appendChild(tr);
+    }
+
+    document.getElementById('resetData').addEventListener('click', () => {
+      if (confirm('Reset all saved status/notes?')) {
+        localStorage.removeItem('upsc2027tracker');
+        location.reload();
+      }
+    });
+
+    document.getElementById('exportCsv').addEventListener('click', () => {
+      let csv = 'Date,Phase,GS Done,PSIR Done,AnswerWriting Done,CurrentAffairs Done,Note\\n';
+      Object.keys(saved).sort().forEach(k => {
+        const r = saved[k] || {};
+        const note = (r.note || '').replace(/"/g, '""');
+        csv += `${k},"${phaseFor(new Date(k))}",${r.gs ? 'Yes' : 'No'},${r.psir ? 'Yes' : 'No'},${r.ans ? 'Yes' : 'No'},${r.ca ? 'Yes' : 'No'},"${note}"\\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'upsc_2027_tracker_status.csv';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+  </script>
+</body>
+</html>
