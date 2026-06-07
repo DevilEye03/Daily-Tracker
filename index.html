@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UPSC GS + PSIR Daily Tracker (8 Jun-15 Sep)</title>
+  <style>
+    :root { color-scheme: light; }
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f5f7fb; color: #1a1a1a; }
+    h1, h2 { margin-bottom: 8px; }
+    .card { background: #fff; border: 1px solid #dfe6f2; border-radius: 8px; padding: 14px; margin-bottom: 14px; }
+    .small { font-size: 12px; color: #555; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 10px; }
+    table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #dfe6f2; }
+    th, td { border: 1px solid #dfe6f2; padding: 6px; vertical-align: top; font-size: 12px; }
+    th { background: #eef3ff; position: sticky; top: 0; z-index: 1; }
+    tr.revision { background: #fff8e1; }
+    input[type="text"] { width: 100%; box-sizing: border-box; font-size: 12px; }
+    .wrapper { overflow: auto; max-height: 72vh; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    button { margin-right: 8px; }
+  </style>
+</head>
+<body>
+  <h1>UPSC GS + PSIR Exact Daily Tracker</h1>
+  <p class="small">Range: <b>08 Jun 2026</b> to <b>15 Sep 2026</b> | GS <b>2.5h</b> + PSIR <b>2.5h</b> + CA <b>1h</b> | Sunday: <b>weekly revision + mini tests</b></p>
+
+  <div class="card">
+    <h2>Execution Structure</h2>
+    <div class="grid">
+      <div>
+        <b>Daily baseline (Mon-Sat)</b>
+        <ul>
+          <li>GS: 1 micro static topic + 10 MCQs (2.5h).</li>
+          <li>PSIR: 1 micro topic + 1 short answer (2.5h).</li>
+          <li>Current Affairs: GS/IR linkage notes (1h).</li>
+        </ul>
+      </div>
+      <div>
+        <b>Sunday protocol</b>
+        <ul>
+          <li>Weekly revision of covered GS + PSIR micro-topics.</li>
+          <li>1 GS mini test + 1 PSIR answer-writing set.</li>
+          <li>Weak-area list and next-week setup.</li>
+        </ul>
+      </div>
+      <div>
+        <b>Coverage objective</b>
+        <ul>
+          <li>W1-W14: full GS + PSIR syllabus coverage with micro-topics.</li>
+          <li>W15 (final days): mocks + PYQs + weak-area closure.</li>
+          <li>Each day stays restricted to one tiny unit per subject.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <button id="exportCsv">Export tracker CSV</button>
+    <button id="resetData">Reset all status</button>
+    <span class="small">All status and notes are stored only in your browser (local use).</span>
+  </div>
+
+  <div class="wrapper">
+    <table id="trackerTable">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Week focus</th>
+          <th>GS micro target</th>
+          <th>PSIR micro target</th>
+          <th>Daily add-on</th>
+          <th>Daily slots</th>
+          <th>Status (GS)</th>
+          <th>Status (PSIR)</th>
+          <th>Status (Ans)</th>
+          <th>Status (CA)</th>
+          <th>Self-note</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    const start = new Date('2026-06-08');
+    const end = new Date('2026-09-15');
+
+    const weekPlans = [
+      {
+        week: 'W1',
+        gsTheme: 'Polity basics',
+        psirTheme: 'Political Theory basics',
+        gsTopics: ['Preamble', 'Constitutional features', 'Union and its territory', 'Citizenship provisions', 'Constitutional amendment process', 'Basic structure doctrine'],
+        psirTopics: ['Meaning and scope of political theory', 'State: definitions and evolution', 'Power, authority, legitimacy', 'Rights: natural and legal views', 'Liberty: negative and positive', 'Equality: formal and substantive']
+      },
+      {
+        week: 'W2',
+        gsTheme: 'Fundamental Rights, DPSP, Parliament',
+        psirTheme: 'Liberty, Equality, Justice, Rights',
+        gsTopics: ['Right to Equality', 'Right to Freedom', 'Right against Exploitation and religion/culture rights', 'Directive Principles of State Policy', 'Parliament: composition and sessions', 'Parliamentary committees and devices'],
+        psirTopics: ['Justice: procedural and distributive', 'Rights and duties debate', 'Democracy and participation', 'Citizenship and multiculturalism', 'Political obligation and civil disobedience', 'Human rights discourse']
+      },
+      {
+        week: 'W3',
+        gsTheme: 'Modern History (1757-1885)',
+        psirTheme: 'Plato and Aristotle',
+        gsTopics: ['Battle of Plassey to Buxar transition', 'Dual government and Bengal administration', 'Regulating Act and Pitt\'s India Act', 'Subsidiary Alliance and expansion', 'Socio-religious reform beginnings', 'Revolt of 1857: causes and spread'],
+        psirTopics: ['Plato: justice in Republic', 'Plato: philosopher king and education', 'Plato: critique and relevance', 'Aristotle: state and citizenship', 'Aristotle: classification of constitutions', 'Aristotle: virtue and best practicable state']
+      },
+      {
+        week: 'W4',
+        gsTheme: 'Modern History (1885-1947) + post-independence basics',
+        psirTheme: 'Machiavelli, Hobbes, Locke, Rousseau',
+        gsTopics: ['Moderate phase of INC', 'Extremist phase and Swadeshi', 'Gandhian movements: NCM and CDM', 'Constitutional developments to 1935 Act', 'Quit India and INA impact', 'Integration of princely states basics'],
+        psirTopics: ['Machiavelli: power and statecraft', 'Hobbes: social contract and sovereignty', 'Locke: rights, consent, limited state', 'Rousseau: general will and freedom', 'Comparative reading: Hobbes-Locke-Rousseau', 'Modern relevance of social contract']
+      },
+      {
+        week: 'W5',
+        gsTheme: 'Physical Geography',
+        psirTheme: 'Mill, Marx, Gramsci',
+        gsTopics: ['Interior of Earth and plate tectonics', 'Earthquakes and volcanism', 'Geomorphic processes and landforms', 'Atmosphere structure and heat budget', 'Monsoon mechanism', 'Ocean currents and climate influence'],
+        psirTopics: ['Mill on liberty', 'Mill on representative government', 'Marx: historical materialism', 'Marx: class and state', 'Gramsci: hegemony and civil society', 'Mill-Marx-Gramsci comparative lens']
+      },
+      {
+        week: 'W6',
+        gsTheme: 'Indian Geography + mapping',
+        psirTheme: 'Indian Political Thought',
+        gsTopics: ['Indian physiographic divisions', 'Indian drainage systems', 'Soils and natural vegetation', 'Agricultural regions and cropping patterns', 'Mineral and energy resources mapping', 'Industrial location patterns'],
+        psirTopics: ['Kautilya: statecraft and mandala', 'Gandhi: swaraj and trusteeship', 'Ambedkar: social justice and constitution', 'Nehru: secularism and planning vision', 'M.N. Roy and radical humanism', 'Lohia and socialist critique']
+      },
+      {
+        week: 'W7',
+        gsTheme: 'Economy basics',
+        psirTheme: 'Indian Constitution debates and federalism',
+        gsTopics: ['National income concepts', 'Inflation types and trends', 'Banking structure and monetary policy tools', 'Fiscal policy and deficit concepts', 'Taxation basics and GST architecture', 'Growth vs development indicators'],
+        psirTopics: ['Constituent Assembly debates overview', 'Salient features of Indian Constitution', 'Federalism and centre-state relations', 'Parliamentary system in India', 'Judicial review and basic structure', 'Constitutionalism and democratic deepening']
+      },
+      {
+        week: 'W8',
+        gsTheme: 'Economy advanced',
+        psirTheme: 'Party system, caste, class, ethnicity, movements',
+        gsTopics: ['Budget documents and interpretation', 'Economic Survey usage for mains', 'External sector: BOP and exchange rate', 'FDI/FPI and capital flows', 'Poverty and inequality measurement', 'Inclusion architecture: JAM/DBT/financial inclusion'],
+        psirTopics: ['Indian party system evolution', 'Coalition politics and governance', 'Caste and politics linkage', 'Class and political mobilization', 'Ethnicity and identity politics', 'Social movements and democratic outcomes']
+      },
+      {
+        week: 'W9',
+        gsTheme: 'Environment, ecology, disaster management',
+        psirTheme: 'Comparative Politics + political development',
+        gsTopics: ['Ecosystem structure and functions', 'Biodiversity conservation framework', 'Climate change: causes and impacts', 'International climate agreements', 'Disaster management cycle', 'Institutional framework for disasters in India'],
+        psirTopics: ['Comparative method basics', 'State in developed vs developing societies', 'Political culture and socialization', 'Political development and modernization', 'Dependency and world-system perspectives', 'Democratization waves and challenges']
+      },
+      {
+        week: 'W10',
+        gsTheme: 'Science-tech + internal security basics',
+        psirTheme: 'IR theories',
+        gsTopics: ['Space technology and applications', 'Biotechnology basics and regulation', 'AI and digital public infrastructure governance', 'Cybersecurity basics', 'Internal security threats overview', 'Role of intelligence and policing reforms'],
+        psirTopics: ['Realism: assumptions and variants', 'Liberalism and institutionalism', 'Constructivism and norm dynamics', 'Marxist and critical approaches in IR', 'Balance of power and collective security', 'Theory application to contemporary crises']
+      },
+      {
+        week: 'W11',
+        gsTheme: 'Society + social justice + governance',
+        psirTheme: 'International institutions and globalization',
+        gsTopics: ['Indian society: diversity and unity', 'Communalism, regionalism, secularism', 'Women and vulnerable sections issues', 'Social justice schemes and outcomes', 'Governance: transparency and accountability', 'Citizen charter, e-governance and service delivery'],
+        psirTopics: ['UN system and reform debates', 'IMF and World Bank governance issues', 'WTO and trade governance', 'Regional organizations and cooperation limits', 'Globalization and sovereignty debate', 'Global governance and democratic deficit']
+      },
+      {
+        week: 'W12',
+        gsTheme: 'International relations (India & world)',
+        psirTheme: 'India foreign policy foundations + neighbourhood',
+        gsTopics: ['Determinants of India foreign policy', 'Neighbourhood First priorities', 'India and major powers balancing', 'Diaspora and soft power', 'Multilateral diplomacy priorities', 'Indian Ocean and maritime strategy'],
+        psirTopics: ['Evolution of Indian foreign policy', 'Strategic autonomy and non-alignment legacy', 'India and South Asia neighbourhood dynamics', 'India and BIMSTEC/IORA regionalism', 'Border and security concerns in neighbourhood', 'Development partnerships and diplomacy tools']
+      },
+      {
+        week: 'W13',
+        gsTheme: 'Ethics theory + case-study framework',
+        psirTheme: 'India-US, Russia, China, EU, West Asia, Africa, ASEAN',
+        gsTopics: ['Ethics and human interface', 'Attitude and emotional intelligence', 'Aptitude and foundational values for civil service', 'Probity in governance', 'Case-study approach and stakeholder mapping', 'Ethical decision models and justification writing'],
+        psirTopics: ['India-US strategic partnership', 'India-Russia continuity and shifts', 'India-China competition and cooperation', 'India-EU relations', 'India and West Asia energy-security matrix', 'India-Africa and ASEAN engagement']
+      },
+      {
+        week: 'W14',
+        gsTheme: 'GS full revision',
+        psirTheme: 'PSIR full revision',
+        gsTopics: ['GS revision: Polity + History', 'GS revision: Geography + Environment', 'GS revision: Economy + S&T', 'GS revision: Society + Governance + IR', 'GS revision: Ethics framework consolidation', 'GS mixed PYQ drill and error log closure'],
+        psirTopics: ['PSIR Paper 1 revision: Theory and thinkers', 'PSIR Paper 1 revision: Indian thought + comparative politics', 'PSIR Paper 2 revision: IR theories and institutions', 'PSIR Paper 2 revision: India foreign policy themes', 'PSIR mixed PYQ answer framing', 'PSIR weak-area quick revision map']
+      },
+      {
+        week: 'W15',
+        gsTheme: 'Mocks + PYQs + weak-area closure',
+        psirTheme: 'Mocks + PYQs + weak-area closure',
+        gsTopics: ['GS full-length mini mock analysis', 'GS weakest-topic rapid revision', 'GS PYQ trend-based consolidation', 'GS answer structuring speed drill', 'GS data/examples enrichment', 'GS final error log cleanup'],
+        psirTopics: ['PSIR sectional mock analysis', 'PSIR weak thinker/theory revision', 'PSIR India-world relation hot themes', 'PSIR value-add quotations and scholars', 'PSIR answer structure and intro-conclusion drill', 'PSIR final weak-area closure']
+      }
+    ];
+
+    const slots = 'GS (2.5h) | PSIR (2.5h) | Current Affairs linkage notes (1h)';
+
+    function fmt(d) {
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
+    function parseDateKey(dateKey) {
+      const [y, m, d] = dateKey.split('-').map(Number);
+      return new Date(y, m - 1, d);
+    }
+
+    function escAttr(s) {
+      return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function weekInfoFor(d) {
+      const dayOffset = Math.floor((parseDateKey(fmt(d)) - parseDateKey(fmt(start))) / (1000 * 60 * 60 * 24));
+      const weekIdx = Math.min(14, Math.floor(dayOffset / 7));
+      return weekPlans[weekIdx];
+    }
+
+    function studySlotFor(d) {
+      const day = d.getDay();
+      if (day === 0) return null;
+      return day - 1;
+    }
+
+    function addonFor(d) {
+      if (d.getDay() === 0) return 'Weekly revision day: GS mini test + PSIR answer-writing set + backlog closure.';
+      return '10 GS MCQs + 1 PSIR short answer + CA linkage notes update.';
+    }
+
+    const tbody = document.querySelector('#trackerTable tbody');
+    const saved = JSON.parse(localStorage.getItem('upsc100day_tracker') || '{}');
+
+    for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+      const day = d.getDay();
+      const dateKey = fmt(d);
+      const plan = weekInfoFor(d);
+      const slot = studySlotFor(d);
+
+      const gs = day === 0
+        ? `Weekly revision (${plan.week}): revise GS ${plan.gsTheme}; attempt 1 GS mini test and analyze mistakes.`
+        : `GS: ${plan.gsTopics[slot]}. 10 MCQs + quick error log.`;
+
+      const ps = day === 0
+        ? `Weekly revision (${plan.week}): revise PSIR ${plan.psirTheme}; write 1 PSIR answer set.`
+        : `PSIR: ${plan.psirTopics[slot]}. Write 1 short answer with intro-body-conclusion.`;
+
+      const data = saved[dateKey] || { gs: '', psir: '', ans: '', ca: '', note: '' };
+      const tr = document.createElement('tr');
+      if (day === 0) tr.className = 'revision';
+
+      tr.innerHTML = `
+        <td>${dateKey} (${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][day]})</td>
+        <td>${plan.week}: GS ${plan.gsTheme} | PSIR ${plan.psirTheme}</td>
+        <td>${gs}</td>
+        <td>${ps}</td>
+        <td>${addonFor(d)}</td>
+        <td>${day === 0 ? 'Revision priority (4-5h): weekly recap + tests + planning' : slots}</td>
+        <td><input type="checkbox" data-k="gs" ${data.gs ? 'checked' : ''}></td>
+        <td><input type="checkbox" data-k="psir" ${data.psir ? 'checked' : ''}></td>
+        <td><input type="checkbox" data-k="ans" ${data.ans ? 'checked' : ''}></td>
+        <td><input type="checkbox" data-k="ca" ${data.ca ? 'checked' : ''}></td>
+        <td><input type="text" data-k="note" value="${escAttr(data.note || '')}" placeholder="weak areas / completion notes"></td>
+      `;
+
+      tr.querySelectorAll('input').forEach(inp => {
+        inp.addEventListener('change', () => {
+          const row = saved[dateKey] || {};
+          if (inp.type === 'checkbox') row[inp.dataset.k] = inp.checked ? 1 : 0;
+          else row[inp.dataset.k] = inp.value;
+          saved[dateKey] = row;
+          localStorage.setItem('upsc100day_tracker', JSON.stringify(saved));
+        });
+      });
+
+      tbody.appendChild(tr);
+    }
+
+    document.getElementById('resetData').addEventListener('click', () => {
+      if (confirm('Reset all saved status/notes?')) {
+        localStorage.removeItem('upsc100day_tracker');
+        location.reload();
+      }
+    });
+
+    document.getElementById('exportCsv').addEventListener('click', () => {
+      let csv = 'Date,Week Focus,GS Done,PSIR Done,Answer Done,CurrentAffairs Done,Note\n';
+      Object.keys(saved).sort().forEach(k => {
+        const r = saved[k] || {};
+        const dayPlan = weekInfoFor(parseDateKey(k));
+        const note = (r.note || '').replace(/"/g, '""');
+        csv += `${k},"${dayPlan.week}: GS ${dayPlan.gsTheme} | PSIR ${dayPlan.psirTheme}",${r.gs ? 'Yes' : 'No'},${r.psir ? 'Yes' : 'No'},${r.ans ? 'Yes' : 'No'},${r.ca ? 'Yes' : 'No'},"${note}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'upsc_gs_psir_100day_status.csv';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+  </script>
+</body>
+</html>
