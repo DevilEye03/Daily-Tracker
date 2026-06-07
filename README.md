@@ -4,9 +4,7 @@ Local offline app for a detailed **UPSC CSE 2027** daily tracker.
 
 ## Use
 
-Open this file in a browser:
-
-- `/tmp/workspace/DevilEye03/Daily-Tracker/index.html`
+Open `index.html` in a browser from the cloned repository directory.
 
 It includes:
 

@@ -220,11 +220,11 @@
     });
 
     document.getElementById('exportCsv').addEventListener('click', () => {
-      let csv = 'Date,Phase,GS Done,PSIR Done,AnswerWriting Done,CurrentAffairs Done,Note\\n';
+      let csv = 'Date,Phase,GS Done,PSIR Done,AnswerWriting Done,CurrentAffairs Done,Note\n';
       Object.keys(saved).sort().forEach(k => {
         const r = saved[k] || {};
         const note = (r.note || '').replace(/"/g, '""');
-        csv += `${k},"${phaseFor(new Date(k))}",${r.gs ? 'Yes' : 'No'},${r.psir ? 'Yes' : 'No'},${r.ans ? 'Yes' : 'No'},${r.ca ? 'Yes' : 'No'},"${note}"\\n`;
+        csv += `${k},"${phaseFor(new Date(k))}",${r.gs ? 'Yes' : 'No'},${r.psir ? 'Yes' : 'No'},${r.ans ? 'Yes' : 'No'},${r.ca ? 'Yes' : 'No'},"${note}"\n`;
       });
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const a = document.createElement('a');
