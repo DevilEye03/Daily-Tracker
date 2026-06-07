@@ -4,7 +4,7 @@ Local offline app for an exact **100-day UPSC GS + PSIR** daily tracker.
 
 ## Use
 
-Open `/tmp/workspace/DevilEye03/Daily-Tracker/index.html` in a browser.
+Open `index.html` in a browser from the cloned repository directory.
 
 It includes:
 
